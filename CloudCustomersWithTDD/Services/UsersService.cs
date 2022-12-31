@@ -2,14 +2,20 @@
 
 namespace CloudCustomersAPIWithTDD.Services
 {
+    public interface IUsersService
+    {
+        public Task<List<User>> GetAllUsers();
+    }
+
     public class UsersService : IUsersService
     {
-        public UsersService()
+        private readonly HttpClient _httpClient;
+        public UsersService(HttpClient httpClient)
         {
-
+            _httpClient = httpClient;
         }
 
-        Task<List<User>> IUsersService.GetAllUsers()
+        public Task<List<User>> GetAllUsers()
         {
             throw new NotImplementedException();
         }
