@@ -1,4 +1,6 @@
-﻿using CloudCustomersAPIWithTDD.Models;
+﻿using CloudCustomersAPIWithTDD.Config;
+using CloudCustomersAPIWithTDD.Models;
+using Microsoft.Extensions.Options;
 
 namespace CloudCustomersAPIWithTDD.Services
 {
@@ -10,14 +12,18 @@ namespace CloudCustomersAPIWithTDD.Services
     public class UsersService : IUsersService
     {
         private readonly HttpClient _httpClient;
-        public UsersService(HttpClient httpClient)
+        private readonly UsersApiOptions _apiConfig;
+
+        public UsersService(HttpClient httpClient, IOptions<UsersApiOptions> apiConfig)
         {
             _httpClient = httpClient;
+            _apiConfig = apiConfig.Value;
         }
 
         public async Task<List<User>> GetAllUsers()
         {
-            var usersResponse = await _httpClient.GetAsync("https://example.com");
+            var usersResponse = await _httpClient
+                .GetAsync(_apiConfig.Endpoint);
             if(usersResponse.StatusCode == System.Net.HttpStatusCode.NotFound) { 
                 return new List<User>();
             }
