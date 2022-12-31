@@ -1,4 +1,4 @@
-namespace CloudCustomersWithTDD
+namespace CloudCustomersAPIWithTDD
 {
     public class WeatherForecast
     {
