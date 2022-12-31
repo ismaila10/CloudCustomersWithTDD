@@ -15,9 +15,10 @@ namespace CloudCustomersAPIWithTDD.Services
             _httpClient = httpClient;
         }
 
-        public Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var usersResponse = await _httpClient.GetAsync("https://example.com");
+            return new List<User> { };
         }
     }
 }
