@@ -1,3 +1,4 @@
+using CloudCustomersAPIWithTDD.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudCustomersAPIWithTDD.Controllers
@@ -6,22 +7,23 @@ namespace CloudCustomersAPIWithTDD.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        private readonly IUsersService _usersService;
 
-        private readonly ILogger<UsersController> _logger;
-
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(IUsersService usersService)
         {
-            _logger = logger;
+            _usersService = usersService;
         }
 
         [HttpGet(Name = "GetUsers")]
         public async Task<IActionResult> Get()
         {
-            return null;
+            var users = await _usersService.GetAllUsers();
+            if(users.Any())
+            {
+                return Ok(users);
+            }
+
+            return NotFound();
         }
     }
 }
